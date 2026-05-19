@@ -204,8 +204,6 @@ async function loadPdf(path, title='PDF viewer', paperIndex=0){
         <span class="path">${title}</span>
       </div>
       <div class="pdf-actions">
-        <button id="zoomOut" class="btn" type="button" aria-label="Zoom out">-</button>
-        <button id="zoomIn" class="btn" type="button" aria-label="Zoom in">+</button>
         <button id="fullScreenPdf" class="btn" type="button">Full Screen</button>
         <a class="btn" href="${pdfSrc}" download>Download</a>
       </div>
@@ -233,8 +231,6 @@ function wirePdfControls(){
   const papers = current.manifest?.[current.section] || []
   const prevPaper = el('prevPaper')
   const nextPaper = el('nextPaper')
-  const zoomOut = el('zoomOut')
-  const zoomIn = el('zoomIn')
   const fullScreen = el('fullScreenPdf')
   if(prevPaper) prevPaper.disabled = !activePdf || activePdf.paperIndex <= 0
   if(nextPaper) nextPaper.disabled = !activePdf || activePdf.paperIndex >= papers.length - 1
@@ -248,23 +244,6 @@ function wirePdfControls(){
   // Back button
   const backButton = el('pdfBackButton')
   backButton?.addEventListener?.('click', () => exitPdfView())
-
-  // Zoom controls (single handlers)
-  zoomOut?.addEventListener('click', () => {
-    if(!activePdf) return
-    const oldZoom = activePdf.zoom || 1
-    activePdf.zoom = Math.max(0.7, Number((oldZoom - 0.15).toFixed(2)))
-    console.debug('zoomOut clicked', {oldZoom, newZoom: activePdf.zoom})
-    renderPdfToCanvas(activePdf.src).catch(() => showPdfFallback())
-  })
-
-  zoomIn?.addEventListener('click', () => {
-    if(!activePdf) return
-    const oldZoom = activePdf.zoom || 1
-    activePdf.zoom = Math.min(1.8, Number((oldZoom + 0.15).toFixed(2)))
-    console.debug('zoomIn clicked', {oldZoom, newZoom: activePdf.zoom})
-    renderPdfToCanvas(activePdf.src).catch(() => showPdfFallback())
-  })
 
   // Fullscreen toggle
   fullScreen?.addEventListener('click', async () => {
@@ -363,32 +342,6 @@ window.addEventListener('resize', () => {
 document.addEventListener('fullscreenchange', () => {
   const fullScreen = el('fullScreenPdf')
   if(fullScreen) fullScreen.textContent = document.fullscreenElement ? 'Exit Full Screen' : 'Full Screen'
-})
-
-// Keyboard shortcuts for zooming when a PDF is active
-document.addEventListener('keydown', (e) => {
-  if(!activePdf) return
-  // Don't trigger while typing in inputs
-  const tag = document.activeElement?.tagName?.toLowerCase()
-  if(tag === 'input' || tag === 'textarea') return
-  if(e.key === '+' || e.key === '='){
-    e.preventDefault()
-    const oldZoom = activePdf.zoom || 1
-    activePdf.zoom = Math.min(1.8, Number((oldZoom + 0.15).toFixed(2)))
-    console.debug('keyboard zoomIn', {oldZoom, newZoom: activePdf.zoom})
-    renderPdfToCanvas(activePdf.src).catch(() => showPdfFallback())
-  } else if(e.key === '-'){
-    e.preventDefault()
-    const oldZoom = activePdf.zoom || 1
-    activePdf.zoom = Math.max(0.7, Number((oldZoom - 0.15).toFixed(2)))
-    console.debug('keyboard zoomOut', {oldZoom, newZoom: activePdf.zoom})
-    renderPdfToCanvas(activePdf.src).catch(() => showPdfFallback())
-  } else if(e.key === '0'){
-    e.preventDefault()
-    activePdf.zoom = 1
-    console.debug('keyboard zoomReset')
-    renderPdfToCanvas(activePdf.src).catch(() => showPdfFallback())
-  }
 })
 
 window.openPDF = openPDF
