@@ -1,0 +1,30 @@
+{
+  "notes": [],
+  "pastPapers": [
+    {
+      "title": "Maths Paper 2 Jan 2026",
+      "year": "2026",
+      "type": "Paper 2",
+      "file": "past-papers/Maths Paper 2 Jan 2026.pdf"
+    },
+    {
+      "title": "Maths Paper 2 May-June 2026",
+      "year": "2026",
+      "type": "Paper 2",
+      "file": "past-papers/Maths Paper 2 May-June 2026.pdf"
+    },
+    {
+      "title": "Maths Paper 2 Jan 2025",
+      "year": "2025",
+      "type": "Paper 2",
+      "file": "past-papers/Maths Paper 2 Jan 2025.pdf"
+    },
+    {
+      "title": "Maths Paper 2 May-June 2025",
+      "year": "2025",
+      "type": "Paper 2",
+      "file": "past-papers/Maths Paper 2 May-June 2025.pdf"
+    }
+  ],
+  "pastPapersAnswers": []
+}
