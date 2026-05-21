@@ -10,6 +10,7 @@ html{min-width:320px}
 body{margin:0;font-family:Inter,Segoe UI,system-ui,Arial;background:var(--bg);color:#e6eef3;overflow-x:hidden}
 .site-header{padding:20px 24px;background:linear-gradient(90deg,#071018, #081323);border-bottom:1px solid #071018}
 .site-header h1{margin:0;font-size:20px}
+.site-footer{margin-top:32px;padding:20px 24px;text-align:center;color:var(--muted);font-size:14px;border-top:1px solid rgba(255,255,255,0.06);background:linear-gradient(180deg,rgba(7,16,24,0.95),transparent)}
 .container{width:min(100%,1180px);padding:24px;margin:0 auto}
 
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-top:16px}

@@ -136,7 +136,7 @@ function renderFileList(){
     fileContent.innerHTML = ''
     return 0
   }
-  entries.forEach(e=>{
+  entries.forEach((e,index)=>{
     const node = document.createElement('button')
     node.type = 'button'
     node.className = 'file-item'
@@ -144,9 +144,7 @@ function renderFileList(){
     node.addEventListener('click', ()=>{
       fileList.querySelectorAll('.file-item.active').forEach(item => item.classList.remove('active'))
       node.classList.add('active')
-      const year = e.year || e.title
-      const type = e.type || e.file
-      openPDF(current.subject.name, year, type, entries.indexOf(e))
+      openPDF(current.subject.name, index)
     })
     fileList.appendChild(node)
   })
@@ -154,23 +152,19 @@ function renderFileList(){
   return entries.length
 }
 
-function openPDF(subject, year, type, paperIndex=null){
+function openPDF(subject, paperIndex=null){
   const entries = current.manifest?.[current.section] || []
-  const entry = entries.find(item =>
-    item.year === year ||
-    item.type === type ||
-    item.file === type ||
-    item.title === year
-  )
+  const entry = typeof paperIndex === 'number' && paperIndex >= 0 && paperIndex < entries.length
+    ? entries[paperIndex]
+    : null
 
   if(!entry){
-    fileContent.innerHTML = `<p style="color:#f88">PDF not found for ${subject} ${year} ${type}.</p>`
+    fileContent.innerHTML = `<p style="color:#f88">PDF not found for ${subject}.</p>`
     return
   }
 
   const pdfPath = `./subjects/${subject}/${entry.file}`
-  const index = paperIndex ?? entries.indexOf(entry)
-  loadPdf(pdfPath, entry.title, index)
+  loadPdf(pdfPath, entry.title, paperIndex)
 }
 
 async function loadFile(path){
