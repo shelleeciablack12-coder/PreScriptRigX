@@ -1,5 +1,59 @@
 {
-  "notes": [],
+  "notes": [
+    {
+      "title": "Whole Numbers",
+      "type": "Video",
+      "videoId": "99VNC07y0Ek",
+      "file": "notes/maths-video.html"
+    },
+    {
+      "title": "What Is A Fraction?",
+      "type": "Video",
+      "videoId": "c8T0aeIP-W4",
+      "file": "notes/what-is-a-fraction.html"
+    },
+    {
+      "title": "How to Calculate Fraction?",
+      "type": "Video",
+      "videoId": "EKoI1hYbpA4",
+      "file": "notes/how-to-calculate-fraction.html"
+    },
+    {
+      "title": "What is a Decimal?",
+      "type": "Video",
+      "videoId": "xiMuFg9UqNY",
+      "file": "notes/what-is-a-decimal.html"
+    },
+    {
+      "title": "How to Convert Fractions to Decimals",
+      "type": "Video",
+      "videoId": "jfOGPDgMrp0",
+      "file": "notes/convert-fractions-to-decimals.html"
+    },
+    {
+      "title": "How to Convert Fractions to Recurring Decimals",
+      "type": "Video",
+      "videoId": "zNe2qXCDPIM",
+      "file": "notes/convert-fractions-to-recurring-decimals.html"
+    },
+    {
+      "title": "How to Convert Decimals to Percentages",
+      "type": "Video",
+      "videoId": "u5f3pmZG_IU",
+      "file": "notes/convert-decimals-to-percentages.html"
+    },
+    {
+      "title": "How to Convert Recurring Decimals to Fractions",
+      "type": "Video",
+      "videoId": "RCnSGUpoKbE",
+      "file": "notes/convert-recurring-decimals-to-fractions.html"
+    },
+    {
+      "title": "Maths Paper 2 Practice Questions",
+      "type": "PDF",
+      "file": "notes/Maths Paper 2 (Practice Questions).pdf"
+    }
+  ],
   "pastPapers": [
     {
       "title": "Maths Paper 2 May-June 2026",
@@ -14,10 +68,22 @@
       "file": "past-papers/Maths Paper 2 Jan 2026.pdf"
     },
     {
+      "title": "Maths Paper 1 May-June 2025",
+      "year": "2025",
+      "type": "Paper 1",
+      "file": "past-papers/CSEC_Mathematics_P1_2025_MJ.pdf"
+    },
+    {
       "title": "Maths Paper 2 May-June 2025",
       "year": "2025",
       "type": "Paper 2",
       "file": "past-papers/Maths Paper 2 May-June 2025.pdf"
+    },
+    {
+      "title": "Maths Paper 1 Jan 2025",
+      "year": "2025",
+      "type": "Paper 1",
+      "file": "past-papers/CSEC_Mathematics_P1_2025_JAN.pdf"
     },
     {
       "title": "Maths Paper 2 Jan 2025",
@@ -26,10 +92,28 @@
       "file": "past-papers/Maths Paper 2 Jan 2025.pdf"
     },
     {
+      "title": "Maths Paper 1 May-June 2024",
+      "year": "2024",
+      "type": "Paper 1",
+      "file": "past-papers/CSEC_Mathematics_P1_2024_MJ.pdf"
+    },
+    {
       "title": "Maths Paper 2 May-June 2024",
       "year": "2024",
       "type": "Paper 2",
       "file": "past-papers/Maths Paper 2 May-June 2024.pdf"
+    },
+    {
+      "title": "Maths Paper 1 Jan 2024",
+      "year": "2024",
+      "type": "Paper 1",
+      "file": "past-papers/CSEC_Mathematics_P1_2024_JAN.pdf"
+    },
+    {
+      "title": "Maths Paper 1 May-June 2023",
+      "year": "2023",
+      "type": "Paper 1",
+      "file": "past-papers/CSEC_Mathematics_P1_2023_MJ.pdf"
     },
     {
       "title": "Maths Paper 2 May-June 2023",
@@ -38,10 +122,22 @@
       "file": "past-papers/Maths Paper 2 May-June 2023.pdf"
     },
     {
+      "title": "Maths Paper 1 Jan 2023",
+      "year": "2023",
+      "type": "Paper 1",
+      "file": "past-papers/CSEC_Mathematics_P1_2023_JAN.pdf"
+    },
+    {
       "title": "Maths Paper 2 Jan 2023",
       "year": "2023",
       "type": "Paper 2",
       "file": "past-papers/Maths Paper 2 Jan 2023.pdf"
+    },
+    {
+      "title": "Maths Paper 1 May-June 2022",
+      "year": "2022",
+      "type": "Paper 1",
+      "file": "past-papers/CSEC_Mathematics_P1_2022_MJ.pdf"
     },
     {
       "title": "Maths Paper 2 May-June 2022",
@@ -62,10 +158,28 @@
       "file": "past-papers/Maths Paper 2 May-June 2021.pdf"
     },
     {
+      "title": "Maths Paper 1 Jan 2021",
+      "year": "2021",
+      "type": "Paper 1",
+      "file": "past-papers/CSEC_Mathematics_P1_2021_JAN.pdf"
+    },
+    {
       "title": "Maths Paper 2 Jan 2021",
       "year": "2021",
       "type": "Paper 2",
       "file": "past-papers/Maths Paper 2 Jan 2021.pdf"
+    },
+    {
+      "title": "Maths Paper 1 May-June 2020",
+      "year": "2020",
+      "type": "Paper 1",
+      "file": "past-papers/CSEC_Mathematics_P1_2020_MJ.pdf"
+    },
+    {
+      "title": "Maths Paper 1 Jan 2020",
+      "year": "2020",
+      "type": "Paper 1",
+      "file": "past-papers/CSEC_Mathematics_P1_2020_JAN.pdf"
     },
     {
       "title": "Maths Paper 2 Jan 2020",
@@ -74,10 +188,28 @@
       "file": "past-papers/Maths Paper 2 Jan 2020.pdf"
     },
     {
+      "title": "Maths Paper 1 May-June 2019",
+      "year": "2019",
+      "type": "Paper 1",
+      "file": "past-papers/CSEC_Mathematics_P1_2019_MJ.pdf"
+    },
+    {
       "title": "Maths Paper 2 May-June 2019",
       "year": "2019",
       "type": "Paper 2",
       "file": "past-papers/Maths Paper 2 May-June 2019.pdf"
+    },
+    {
+      "title": "Maths Paper 1 Jan 2019",
+      "year": "2019",
+      "type": "Paper 1",
+      "file": "past-papers/CSEC_Mathematics_P1_2019_JAN.pdf"
+    },
+    {
+      "title": "Maths Paper 1 May-June 2018",
+      "year": "2018",
+      "type": "Paper 1",
+      "file": "past-papers/CSEC_Mathematics_P1_2018_MJ.pdf"
     },
     {
       "title": "Maths Paper 2 May-June 2018",
@@ -86,10 +218,22 @@
       "file": "past-papers/Maths Paper 2 May-June 2018.pdf"
     },
     {
+      "title": "Maths Paper 1 Jan 2018",
+      "year": "2018",
+      "type": "Paper 1",
+      "file": "past-papers/CSEC_Mathematics_P1_2018_JAN.pdf"
+    },
+    {
       "title": "Maths Paper 2 Jan 2018",
       "year": "2018",
       "type": "Paper 2",
       "file": "past-papers/Maths Paper 2 Jan 2018.pdf"
+    },
+    {
+      "title": "Maths Paper 1 May-June 2017",
+      "year": "2017",
+      "type": "Paper 1",
+      "file": "past-papers/CSEC_Mathematics_P1_2017_MJ.pdf"
     },
     {
       "title": "Maths Paper 2 May-June 2017",
@@ -98,10 +242,28 @@
       "file": "past-papers/Maths Paper 2 May-June 2017.pdf"
     },
     {
+      "title": "Maths Paper 1 Jan 2017",
+      "year": "2017",
+      "type": "Paper 1",
+      "file": "past-papers/CSEC_Mathematics_P1_2017_JAN.pdf"
+    },
+    {
+      "title": "Maths Paper 1 May-June 2016",
+      "year": "2016",
+      "type": "Paper 1",
+      "file": "past-papers/CSEC_Mathematics_P1_2016_MJ.pdf"
+    },
+    {
       "title": "Maths Paper 2 May-June 2016",
       "year": "2016",
       "type": "Paper 2",
       "file": "past-papers/Maths Paper 2 May-June 2016.pdf"
+    },
+    {
+      "title": "Maths Paper 1 May-June 2015",
+      "year": "2015",
+      "type": "Paper 1",
+      "file": "past-papers/CSEC_Mathematics_P1_2015_MJ.pdf"
     },
     {
       "title": "Maths Paper 2 May-June 2015",
@@ -110,10 +272,28 @@
       "file": "past-papers/Maths Paper 2 May-June 2015.pdf"
     },
     {
+      "title": "Maths Paper 1 May-June 2014",
+      "year": "2014",
+      "type": "Paper 1",
+      "file": "past-papers/CSEC_Mathematics_P1_2014_MJ.pdf"
+    },
+    {
       "title": "Maths Paper 2 May-June 2014",
       "year": "2014",
       "type": "Paper 2",
       "file": "past-papers/Maths Paper 2 May-June 2014.pdf"
+    },
+    {
+      "title": "Maths Paper 1 Jan 2014",
+      "year": "2014",
+      "type": "Paper 1",
+      "file": "past-papers/CSEC_Mathematics_P1_2014_JAN.pdf"
+    },
+    {
+      "title": "Maths Paper 1 May-June 2013",
+      "year": "2013",
+      "type": "Paper 1",
+      "file": "past-papers/CSEC_Mathematics_P1_2013_MJ.pdf"
     },
     {
       "title": "Maths Paper 2 May-June 2013",
@@ -122,10 +302,22 @@
       "file": "past-papers/Maths Paper 2 May-June 2013.pdf"
     },
     {
+      "title": "Maths Paper 1 May-June 2012",
+      "year": "2012",
+      "type": "Paper 1",
+      "file": "past-papers/CSEC_Mathematics_P1_2012_MJ.pdf"
+    },
+    {
       "title": "Maths Paper 2 May-June 2012",
       "year": "2012",
       "type": "Paper 2",
       "file": "past-papers/Maths Paper 2 May-June 2012.pdf"
+    },
+    {
+      "title": "Maths Paper 1 May-June 2011",
+      "year": "2011",
+      "type": "Paper 1",
+      "file": "past-papers/CSEC_Mathematics_P1_2011_MJ.pdf"
     },
     {
       "title": "Maths Paper 2 May-June 2011",
@@ -134,10 +326,34 @@
       "file": "past-papers/Maths Paper 2 May-June 2011.pdf"
     },
     {
+      "title": "Maths Paper 1 Jan 2011",
+      "year": "2011",
+      "type": "Paper 1",
+      "file": "past-papers/CSEC_Mathematics_P1_2011_JAN.pdf"
+    },
+    {
+      "title": "Maths Paper 1 May-June 2010",
+      "year": "2010",
+      "type": "Paper 1",
+      "file": "past-papers/CSEC_Mathematics_P1_2010_MJ.pdf"
+    },
+    {
       "title": "Maths Paper 2 May-June 2010",
       "year": "2010",
       "type": "Paper 2",
       "file": "past-papers/Maths Paper 2 May-June 2010.pdf"
+    },
+    {
+      "title": "Maths Paper 1 Jan 2010",
+      "year": "2010",
+      "type": "Paper 1",
+      "file": "past-papers/CSEC_Mathematics_P1_2010_JAN.pdf"
+    },
+    {
+      "title": "Maths Paper 1 May-June 2009",
+      "year": "2009",
+      "type": "Paper 1",
+      "file": "past-papers/CSEC_Mathematics_P1_2009_MJ.pdf"
     },
     {
       "title": "Maths Paper 2 May-June 2009",
@@ -164,10 +380,22 @@
       "file": "past-papers/Maths Paper 2 May-June 2007.pdf"
     },
     {
+      "title": "Maths Paper 1 Jan 2007",
+      "year": "2007",
+      "type": "Paper 1",
+      "file": "past-papers/CSEC_Mathematics_P1_2007_JAN.pdf"
+    },
+    {
       "title": "Maths Paper 2 May-June 2006",
       "year": "2006",
       "type": "Paper 2",
       "file": "past-papers/Maths Paper 2 May-June 2006.pdf"
+    },
+    {
+      "title": "Maths Paper 1 Jan 2006",
+      "year": "2006",
+      "type": "Paper 1",
+      "file": "past-papers/CSEC_Mathematics_P1_2006_JAN.pdf"
     },
     {
       "title": "Maths Paper 2 Jan 2006",
@@ -272,5 +500,12 @@
       "file": "past-papers/Maths Paper 2 May-June 1990.pdf"
     }
   ],
-  "pastPapersAnswers": []
+  "pastPapersAnswers": [
+    {
+      "title": "Maths Paper 2 May-June 2026 Answers",
+      "year": "2026",
+      "type": "Paper 2",
+      "file": "past-papers-answers/May-June 2026.pdf"
+    }
+  ]
 }

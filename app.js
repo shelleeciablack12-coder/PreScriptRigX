@@ -12,7 +12,7 @@ const searchInput = el('searchInput')
 const panelArea = el('panelArea')
 const sectionSelection = el('sectionSelection')
 
-let current = {subject:null,section:null,manifest:null,searchTerm:''}
+let current = {subject:null,section:null,manifest:null,searchTerm:'',paperType:null}
 let activePdf = null
 let pdfRenderToken = 0
 let resizeTimer = null
@@ -74,6 +74,7 @@ async function openSubject(folder, section='notes', push=true){
     current.subject = {name: folder, folder}
     current.manifest = manifest
     current.searchTerm = ''
+    current.paperType = null
     if(searchInput) searchInput.value = ''
     showSubjectView()
     sectionSelection.classList.remove('hidden')
@@ -96,13 +97,14 @@ function showHome(push=true){
 
   subjectView.classList.add('hidden')
   homeView.classList.remove('hidden')
-  current = {subject:null,section:null,manifest:null,searchTerm:''}
+  current = {subject:null,section:null,manifest:null,searchTerm:'',paperType:null}
   if(push) history.pushState({},'', '#')
 }
 
 async function setSection(section){
   current.section = section
   current.searchTerm = ''
+  current.paperType = null
   if(searchInput) searchInput.value = ''
   updatePath()
   return renderFileList()
@@ -116,44 +118,266 @@ function renderFileList(){
   fileList.innerHTML = ''
   if(uploadRow) fileList.appendChild(uploadRow)
   const sectionKey = current.section
-  const entries = current.manifest[sectionKey] || []
-  const search = (current.searchTerm || '').toLowerCase()
-  const filtered = search
-    ? entries.filter(e => {
-        const title = (e.title || '').toString().toLowerCase()
-        const type = (e.type || e.file || '').toString().toLowerCase()
-        const year = (e.year || '').toString().toLowerCase()
-        return title.includes(search) || type.includes(search) || year.includes(search)
-      })
-    : entries
+  const entries = getVisibleEntries()
 
-  if(filtered.length===0){
+  if(sectionKey === 'pastPapers' || sectionKey === 'pastPapersAnswers'){
+    renderPaperTypePicker()
+    if(!current.paperType){
+      fileContent.innerHTML = `
+        <div class="document-empty">
+          <h3>Choose a paper</h3>
+          <p>Select Paper 1 or Paper 2 to see available PDFs from newest to oldest.</p>
+        </div>`
+      return 1
+    }
+  }
+
+  if(entries.length===0){
+    const message = current.searchTerm ? 'No matching files found.' : 'No files in this section.'
     const msg = document.createElement('div')
     msg.className = 'file-item'
-    msg.textContent = search ? 'No matching files found.' : 'No files in this section.'
+    msg.textContent = message
     fileList.appendChild(msg)
-    if(!search) exitPdfView()
-    fileContent.innerHTML = ''
+    if(!current.searchTerm) exitPdfView()
+    fileContent.innerHTML = `<div class="document-empty"><h3>${message}</h3></div>`
     return 0
   }
+
+  if(sectionKey === 'pastPapers' || sectionKey === 'pastPapersAnswers'){
+    renderDocumentExplorer(entries)
+    return entries.length
+  }
+
+  if(sectionKey === 'notes'){
+    renderStudySourceExplorer(entries)
+    return entries.length
+  }
+
+  const list = document.createElement('div')
+  list.className = 'document-list'
   entries.forEach((e,index)=>{
     const node = document.createElement('button')
     node.type = 'button'
-    node.className = 'file-item'
-    node.textContent = e.title
+    node.className = 'file-item document-item'
+    node.innerHTML = `
+      <span class="document-title">${e.title}</span>
+      <span class="document-meta">${e.year || 'Unknown year'}${e.type ? ' - ' + e.type : ''}</span>`
     node.addEventListener('click', ()=>{
       fileList.querySelectorAll('.file-item.active').forEach(item => item.classList.remove('active'))
       node.classList.add('active')
-      openPDF(current.subject.name, index)
+      const isPdf = (e.file || '').toLowerCase().endsWith('.pdf')
+      if(isPdf) openPDF(current.subject.name, index)
+      else loadFile(`subjects/${current.subject.name}/${e.file}`)
     })
-    fileList.appendChild(node)
+    list.appendChild(node)
   })
+  fileList.appendChild(list)
   fileContent.innerHTML = ''
   return entries.length
 }
 
+function renderStudySourceExplorer(entries){
+  fileContent.innerHTML = `
+    <div class="document-browser">
+      <div class="document-browser-head">
+        <div>
+          <h3>Study Source</h3>
+          <p>${entries.length} item${entries.length === 1 ? '' : 's'} available</p>
+        </div>
+      </div>
+      <div class="document-card-grid"></div>
+    </div>`
+
+  const grid = fileContent.querySelector('.document-card-grid')
+  entries.forEach((entry,index) => {
+    const videoId = entry.videoId || '99VNC07y0Ek'
+    const isPdf = (entry.file || '').toLowerCase().endsWith('.pdf')
+    const card = document.createElement('button')
+    card.type = 'button'
+    card.className = 'document-card'
+    const preview = isPdf
+      ? `<span class="document-preview" data-preview="./subjects/${current.subject.name}/${entry.file}">
+          <span class="document-preview-label">PDF</span>
+        </span>`
+      : `<span class="document-preview video-preview">
+          <img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" alt="" loading="lazy">
+          <span class="play-badge">Play</span>
+        </span>`
+    card.innerHTML = `
+      ${preview}
+      <span class="document-card-body">
+        <span class="document-card-title">${entry.title}</span>
+        <span class="document-card-meta">${entry.type || 'Study Source'}</span>
+      </span>`
+    card.addEventListener('click', () => {
+      if(isPdf) loadPdf(`./subjects/${current.subject.name}/${entry.file}`, entry.title, index)
+      else loadFile(`subjects/${current.subject.name}/${entry.file}`)
+    })
+    grid.appendChild(card)
+  })
+
+  renderPdfCardPreviews()
+}
+
+function renderDocumentExplorer(entries){
+  fileContent.innerHTML = `
+    <div class="document-browser">
+      <div class="document-browser-head">
+        <div>
+          <h3>${current.paperType === 'paper1' ? 'Paper 1' : 'Paper 2'}</h3>
+          <p>${entries.length} PDF${entries.length === 1 ? '' : 's'} available, newest first</p>
+        </div>
+      </div>
+      <div class="document-card-grid"></div>
+    </div>`
+
+  const grid = fileContent.querySelector('.document-card-grid')
+  entries.forEach((entry,index) => {
+    const card = document.createElement('button')
+    card.type = 'button'
+    card.className = 'document-card'
+    card.innerHTML = `
+      <span class="document-preview" data-preview="./subjects/${current.subject.name}/${entry.file}">
+        <span class="document-preview-label">PDF</span>
+      </span>
+      <span class="document-card-body">
+        <span class="document-card-title">${formatDocumentTitle(entry)}</span>
+        <span class="document-card-meta">${formatDocumentMeta(entry)}</span>
+      </span>`
+    card.addEventListener('click', () => openPDF(current.subject.name, index))
+    grid.appendChild(card)
+  })
+
+  renderPdfCardPreviews()
+}
+
+function formatDocumentTitle(entry){
+  const subjectName = current.subject?.name === 'Maths' ? 'Mathematics' : (current.subject?.name || 'Document').replaceAll('_',' ')
+  return `${subjectName} ${entry.year || ''}`.trim()
+}
+
+function formatDocumentMeta(entry){
+  const session = sessionLabel(entry)
+  return [session, entry.type].filter(Boolean).join(' - ')
+}
+
+function sessionLabel(entry){
+  const text = `${entry.title || ''} ${entry.file || ''}`.toLowerCase()
+  if(text.includes('may-june')) return 'May-June'
+  if(text.includes('jan')) return 'Jan'
+  if(text.includes('may')) return 'May'
+  return ''
+}
+
+function renderPdfCardPreviews(){
+  const previews = [...document.querySelectorAll('.document-preview[data-preview]')]
+  const pdfLibrary = getPdfLibrary()
+  if(!pdfLibrary || previews.length === 0) return
+
+  const renderPreview = async preview => {
+    if(preview.dataset.rendered) return
+    preview.dataset.rendered = 'true'
+    try{
+      pdfLibrary.GlobalWorkerOptions.workerSrc = './vendor/pdfjs/pdf.worker.min.js'
+      const response = await fetch(encodeURI(preview.dataset.preview))
+      if(!response.ok) throw new Error('Failed to fetch PDF')
+      const data = await response.arrayBuffer()
+      const pdf = await pdfLibrary.getDocument({data}).promise
+      const page = await pdf.getPage(1)
+      const baseViewport = page.getViewport({scale:1})
+      const previewWidth = preview.clientWidth || 180
+      const scale = previewWidth / baseViewport.width
+      const viewport = page.getViewport({scale})
+      const pixelRatio = Math.min(window.devicePixelRatio || 1, 2)
+      const canvas = document.createElement('canvas')
+      canvas.width = Math.floor(viewport.width * pixelRatio)
+      canvas.height = Math.floor(viewport.height * pixelRatio)
+      canvas.style.width = `${Math.floor(viewport.width)}px`
+      await page.render({
+        canvasContext: canvas.getContext('2d'),
+        viewport,
+        transform: pixelRatio === 1 ? null : [pixelRatio,0,0,pixelRatio,0,0]
+      }).promise
+      preview.innerHTML = ''
+      preview.appendChild(canvas)
+    }catch(_){
+      preview.innerHTML = '<span class="document-preview-label">PDF</span>'
+    }
+  }
+
+  if('IntersectionObserver' in window){
+    const observer = new IntersectionObserver(items => {
+      items.forEach(item => {
+        if(item.isIntersecting){
+          observer.unobserve(item.target)
+          renderPreview(item.target)
+        }
+      })
+    }, {root:fileContent, rootMargin:'160px'})
+    previews.forEach(preview => observer.observe(preview))
+  } else {
+    previews.slice(0,12).forEach(renderPreview)
+  }
+}
+
+function getVisibleEntries(){
+  const sectionKey = current.section
+  const entries = [...(current.manifest?.[sectionKey] || [])]
+  const search = (current.searchTerm || '').toLowerCase()
+
+  return entries
+    .filter(e => !current.paperType || normalizePaperType(e.type || e.title || e.file) === current.paperType)
+    .filter(e => {
+      if(!search) return true
+      const title = (e.title || '').toString().toLowerCase()
+      const type = (e.type || e.file || '').toString().toLowerCase()
+      const year = (e.year || '').toString().toLowerCase()
+      return title.includes(search) || type.includes(search) || year.includes(search)
+    })
+    .sort(comparePapers)
+}
+
+function renderPaperTypePicker(){
+  const picker = document.createElement('div')
+  picker.className = 'paper-type-picker'
+  ;['Paper 1','Paper 2'].forEach(label => {
+    const value = normalizePaperType(label)
+    const button = document.createElement('button')
+    button.type = 'button'
+    button.className = `paper-type-btn${current.paperType === value ? ' active' : ''}`
+    button.textContent = label
+    button.addEventListener('click', () => {
+      current.paperType = value
+      exitPdfView()
+      renderFileList()
+    })
+    picker.appendChild(button)
+  })
+  fileList.appendChild(picker)
+}
+
+function normalizePaperType(value){
+  const text = (value || '').toString().toLowerCase()
+  if(text.includes('paper 1') || text.includes('paper1')) return 'paper1'
+  if(text.includes('paper 2') || text.includes('paper2')) return 'paper2'
+  return text.replace(/\s+/g,'')
+}
+
+function comparePapers(a,b){
+  const yearDiff = (Number(b.year) || 0) - (Number(a.year) || 0)
+  if(yearDiff) return yearDiff
+  return sessionRank(b) - sessionRank(a)
+}
+
+function sessionRank(entry){
+  const text = `${entry.title || ''} ${entry.file || ''}`.toLowerCase()
+  if(text.includes('may-june') || text.includes('may')) return 2
+  if(text.includes('jan')) return 1
+  return 0
+}
+
 function openPDF(subject, paperIndex=null){
-  const entries = current.manifest?.[current.section] || []
+  const entries = getVisibleEntries()
   const entry = typeof paperIndex === 'number' && paperIndex >= 0 && paperIndex < entries.length
     ? entries[paperIndex]
     : null
@@ -222,7 +446,7 @@ async function loadPdf(path, title='PDF viewer', paperIndex=0){
 }
 
 function wirePdfControls(){
-  const papers = current.manifest?.[current.section] || []
+  const papers = getVisibleEntries()
   const prevPaper = el('prevPaper')
   const nextPaper = el('nextPaper')
   const fullScreen = el('fullScreenPdf')
@@ -237,7 +461,7 @@ function wirePdfControls(){
 
   // Back button
   const backButton = el('pdfBackButton')
-  backButton?.addEventListener?.('click', () => exitPdfView())
+  backButton?.addEventListener?.('click', () => closePdfViewToList())
 
   // Fullscreen toggle
   fullScreen?.addEventListener('click', async () => {
@@ -252,8 +476,14 @@ function wirePdfControls(){
   })
 }
 
+function closePdfViewToList(){
+  activePdf = null
+  setPdfViewing(false)
+  renderFileList()
+}
+
 function openPaperAtIndex(index){
-  const papers = current.manifest?.[current.section] || []
+  const papers = getVisibleEntries()
   const entry = papers[index]
   if(!entry) return
 
